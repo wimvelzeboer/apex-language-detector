@@ -3,6 +3,61 @@
 A lightweight tool for Salesforce to detect the language of a given string.
 It is using the hundred most commonly used words in a language to detect the language.
 
+## Usage
+
+To analyze a string against all available languages, use the `analyse` method.
+
+```apex
+LanguageDetector.DetectionResult languageAnalysis =
+        LanguageDetector.analyse('This is an english text');
+System.Assert.areEqual('en', languageAnalysis.language);
+```
+
+The analyzer will return an object containing the detected language,
+the confidence score and a list of all the languages and their score.
+
+```aiignore
+class DetectionResult {
+  public String languageCode;
+  public Decimal confidence;
+  public Map<String, Decimal> scores;
+}
+```
+
+Running the analyzer on all possible languages will take a while.
+Therefore, a second parameter is available to specify the languages to be analyzed.
+
+```apex
+LanguageDetector.DetectionResult languageAnalysis =
+        LanguageDetector.analyse(
+                'This is an english text',
+                new List<String>{
+                        'en', 'de', 'fr', 'it'
+                }
+        );
+```
+
+Alternatively, you can add a minimum score, once that score is reached,
+it will stop analyzing other languages and immediately return the result.
+
+```apex
+LanguageDetector.DetectionResult languageAnalysis =
+        LanguageDetector.analyse(
+                'This is an english text',
+                0.5); // minimum score
+// OR
+LanguageDetector.DetectionResult languageAnalysis =
+        LanguageDetector.analyse(
+                'This is an english text',
+                new List<String>{
+                        'en', 'de', 'fr', 'it'
+                },
+                0.5); // minimum score
+```
+
+The score is determined by dividing the sum of the weights of matched words by the aggregate weight of all words present
+in the language data.
+
 ## Compatible languages
 
 | ISO 639-1 code | language name         | Compatible |
@@ -192,60 +247,6 @@ It is using the hundred most commonly used words in a language to detect the lan
 | zh             | Chinese               | Yes        |
 | zu             | Zulu                  | Yes        |
 
-## Usage
-
-To analyze a string against all available languages, use the `analyse` method.
-
-```apex
-LanguageDetector.DetectionResult languageAnalysis =
-        LanguageDetector.analyse('This is an english text');
-System.Assert.areEqual('en', languageAnalysis.language);
-```
-
-The analyzer will return an object containing the detected language,
-the confidence score and a list of all the languages and their score.
-
-```aiignore
-class DetectionResult {
-  public String languageCode;
-  public Decimal confidence;
-  public Map<String, Decimal> scores;
-}
-```
-
-Running the analyzer on all possible languages will take a while.
-Therefore, a second parameter is available to specify the languages to be analyzed.
-
-```apex
-LanguageDetector.DetectionResult languageAnalysis =
-        LanguageDetector.analyse(
-                'This is an english text',
-                new List<String>{
-                        'en', 'de', 'fr', 'it'
-                }
-        );
-```
-
-Alternatively, you can add a minimum score, once that score is reached,
-it will stop analyzing other languages and immediately return the result.
-
-```apex
-LanguageDetector.DetectionResult languageAnalysis =
-        LanguageDetector.analyse(
-                'This is an english text',
-                0.5); // minimum score
-// OR
-LanguageDetector.DetectionResult languageAnalysis =
-        LanguageDetector.analyse(
-                'This is an english text',
-                new List<String>{
-                        'en', 'de', 'fr', 'it'
-                },
-                0.5); // minimum score
-```
-
-The score is determined by dividing the sum of the weights of matched words by the aggregate weight of all words present
-in the language data.
 
 ## Contributing
 
