@@ -88,6 +88,33 @@ public virtual class LanguageDetector {
     }
 
     /**
+     * Analyses the input using all supported language analysers
+     *
+     * @param requests An instance DetectionRequest
+     *
+     * @return The detection results containing the best match, confidence, and scores
+     *
+     * @see LanguageDetector.DetectionRequest
+     * @see LanguageDetector.DetectionResult
+     */
+    @InvocableMethod(
+            Label='Detect Language'
+            Description='Analyses as string and detect the language it contains.'
+            Category='LanguageDetection')
+    public static List<DetectionResult> analyse(List<DetectionRequest> requests) {
+        List<DetectionResult> results = new List<DetectionResult>();
+        for (DetectionRequest request : requests) {
+            results.add(
+                    analyse(
+                            request.input,
+                            request.languageCodes == null ? new List<String>(ANALYSER_BY_LANGUAGE.keySet()) : request.languageCodes,
+                            request.minimumScoreLevel)
+            );
+        }
+        return results;
+    }
+
+    /**
      * Analyses the input using only the specified language codes
      *
      * @param input The text to analyse
@@ -320,11 +347,17 @@ public virtual class LanguageDetector {
         /**
          * The best matching language code
          */
+        @InvocableVariable(
+                Label='Language Code'
+                Description='The best matching language code')
         public String languageCode;
 
         /**
          * The confidence score derived from the top score versus total positive score
          */
+        @InvocableVariable(
+                Label='Confidence Score'
+                Description='The confidence score derived from the top score versus total positive score')
         public Decimal confidence;
 
         /**
@@ -340,5 +373,36 @@ public virtual class LanguageDetector {
             this.confidence = 0;
             this.scores = new Map<String, Decimal>();
         }
+    }
+
+    /**
+     * Holds the request of a language detection attempt,
+     * mainly used for InvokableMethod calls
+     */
+    public class DetectionRequest {
+        /**
+         * The text to analyse
+         */
+        @InvocableVariable(
+                Label='Input'
+                Description='The text to be analyzed for language detection'
+                Required=true)
+        public String input;
+
+        /**
+         * The language codes to evaluate
+         */
+        @InvocableVariable(
+                Label='Languages'
+                Description='The language codes to evaluate')
+        public List<String> languageCodes;
+
+        /**
+         * The score threshold that can stop analysis early
+         */
+        @InvocableVariable(
+                Label='Score Threshold'
+                Description='The score threshold that can stop analysis early')
+        public Decimal minimumScoreLevel;
     }
 }

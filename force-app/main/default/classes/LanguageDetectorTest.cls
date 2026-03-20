@@ -53,4 +53,19 @@ private class LanguageDetectorTest {
 
         System.Assert.areEqual('nl', result.languageCode, 'Expected Dutch');
     }
+
+    @IsTest
+    static void testInvokable() {
+        LanguageDetector.DetectionRequest request = new LanguageDetector.DetectionRequest();
+        request.input = 'Dit is toch echt een heel mooie Nederlandse tekst, voor zomaar een test om alles te testen';
+
+        System.Test.startTest();
+        List<LanguageDetector.DetectionResult> result =
+                LanguageDetector.analyse(new List<LanguageDetector.DetectionRequest >{
+                        request
+                });
+        System.Test.stopTest();
+
+        System.Assert.areEqual('nl', result.get(0).languageCode, 'Expected Dutch');
+    }
 }
