@@ -1,12 +1,20 @@
 {
   "packageDirectories": [
     {
+      "versionName": "ver 1.0",
+      "versionNumber": "1.0.0.NEXT",
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "LanguageDetector",
+      "versionDescription": "Salesforce Langauage detector"
     }
   ],
   "name": "apex-language-detector",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "66.0"
+  "sourceApiVersion": "66.0",
+  "packageAliases": {
+    "LanguageDetector": "0HoJ8000000KyjVKAS",
+    "LanguageDetector@0.1.0-1": "04tJ8000000kaKBIAY"
+  }
 }

@@ -1,7 +1,7 @@
 # Salesforce Language Detector
 
-A lightweight tool for Salesforce to detect the language of a given string.
-It is using the hundred most commonly used words in a language to detect the language.
+A lightweight tool for Salesforce to detect the language of a given string,
+by using the hundred most commonly used words in a language to detect the language.
 
 ## Usage
 
@@ -57,6 +57,23 @@ LanguageDetector.DetectionResult languageAnalysis =
 
 The score is determined by dividing the sum of the weights of matched words by the aggregate weight of all words present
 in the language data.
+
+## Installation
+
+The package is available as an Unlocked Managed Package (2GP) with package ID `0HoJ8000000KyjVKAS`.
+
+Either clone the repository and import the package manually,
+use the [Package Installation URL](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ8000000kaKBIAY),
+or execute the following SFDX CLI command in your terminal:
+
+```bash
+sf package install --package 04tJ8000000kaKBIAY --wait=10 --target-org $YOUR_ORG_ALIAS 
+```
+
+_Replace `$YOUR_ORG_ALIAS` with the alias of your target org_
+
+Successfully created the package version [08cJ8000000GmdrIAC]. Subscriber Package Version Id: 04tJ8000000kaKBIAY
+Package Installation URL: https://login.salesforce.com/packaging/installPackage.apexp?p0=04tJ8000000kaKBIAY
 
 ## Compatible languages
 
@@ -251,3 +268,9 @@ in the language data.
 ## Contributing
 
 Pull requests are welcome! Not all languages are supported yet, you can help by adding more.
+
+## Changelog
+
+| Version | Package Version Id | Changes                                     |
+|---------|--------------------|---------------------------------------------|
+| 0.1.0.1 | 04tJ8000000kaKBIAY | Initial release with 45 supported languages |
