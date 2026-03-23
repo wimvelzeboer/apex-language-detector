@@ -369,7 +369,7 @@ public virtual class LanguageDetector {
          * Creates a default detection result
          */
         public DetectionResult() {
-            this.languageCode = 'en-us';
+            this.languageCode = 'en';
             this.confidence = 0;
             this.scores = new Map<String, Decimal>();
         }
